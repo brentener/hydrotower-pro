@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="HydroTower">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>HydroTower Pro</title>
+<style>
+:root{--bg:#0b0f14;--card:#151b23;--card2:#1c2430;--text:#f2f6fb;--muted:#9aa7b7;--good:#34c759;--warn:#ffcc00;--bad:#ff453a;--accent:#64d2ff;--line:#2b3442}*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",Segoe UI,sans-serif;background:linear-gradient(180deg,#071019,#0b0f14 35%);color:var(--text);padding:env(safe-area-inset-top) 14px env(safe-area-inset-bottom)}.wrap{max-width:520px;margin:0 auto;padding:18px 0 90px}.top{display:flex;align-items:center;justify-content:space-between;margin:6px 0 18px}.title{font-size:30px;font-weight:800;letter-spacing:-.8px}.sub{color:var(--muted);font-size:14px;margin-top:2px}.pill{background:rgba(100,210,255,.12);color:var(--accent);border:1px solid rgba(100,210,255,.25);border-radius:999px;padding:8px 11px;font-weight:650;font-size:13px}.card{background:rgba(21,27,35,.92);border:1px solid var(--line);border-radius:22px;padding:16px;margin:12px 0;box-shadow:0 12px 30px rgba(0,0,0,.25)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric{background:var(--card2);border-radius:18px;padding:14px;border:1px solid var(--line)}.metric b{display:block;font-size:24px;letter-spacing:-.4px}.metric span{color:var(--muted);font-size:13px}.status{font-size:13px;margin-top:8px;font-weight:700}.good{color:var(--good)}.warn{color:var(--warn)}.bad{color:var(--bad)}label{display:block;color:var(--muted);font-size:13px;margin:13px 0 6px}input,select{width:100%;font-size:18px;color:var(--text);background:#0f151d;border:1px solid var(--line);border-radius:14px;padding:13px 12px;outline:none}input:focus,select:focus{border-color:var(--accent)}button{width:100%;border:0;border-radius:16px;padding:15px 16px;font-size:17px;font-weight:800;color:#001018;background:linear-gradient(180deg,#8de3ff,#64d2ff);margin-top:16px}.secondary{background:#202a36;color:var(--text);border:1px solid var(--line)}.tabs{position:fixed;left:0;right:0;bottom:0;background:rgba(10,14,20,.88);backdrop-filter:blur(18px);border-top:1px solid var(--line);display:flex;justify-content:center;padding:8px 0 calc(8px + env(safe-area-inset-bottom))}.tabs div{width:25%;max-width:120px;text-align:center;color:var(--muted);font-size:12px;padding:8px 0;border-radius:14px}.tabs .active{color:var(--accent);background:rgba(100,210,255,.09)}.hidden{display:none}.rec{background:#0f151d;border:1px solid var(--line);border-radius:16px;padding:12px;margin:9px 0;line-height:1.35}.small{font-size:12px;color:var(--muted);line-height:1.45}.row{display:flex;gap:10px}.row>div{flex:1}.history{border-collapse:collapse;width:100%;font-size:13px}.history td,.history th{border-bottom:1px solid var(--line);padding:9px 4px;text-align:left}.history th{color:var(--muted);font-weight:600}.notice{background:rgba(255,204,0,.1);border:1px solid rgba(255,204,0,.25);color:#ffe580;border-radius:16px;padding:12px;font-size:13px;line-height:1.35}.install{background:rgba(52,199,89,.1);border:1px solid rgba(52,199,89,.25);color:#b8f6c8;border-radius:16px;padding:12px;font-size:13px;line-height:1.35}a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><div><div class="title">HydroTower</div><div class="sub">pH · EC · µS/cm · temp calculator</div></div><div class="pill">Pro v1</div></div>
+
+  <section id="dashboard" class="page">
+    <div class="card">
+      <div class="grid">
+        <div class="metric"><span>pH</span><b id="dashPh">–</b><div id="phState" class="status">No data</div></div>
+        <div class="metric"><span>EC</span><b id="dashEc">–</b><div id="ecState" class="status">mS/cm</div></div>
+        <div class="metric"><span>µS/cm</span><b id="dashUs">–</b><div class="status">conductivity</div></div>
+        <div class="metric"><span>Water temp</span><b id="dashTemp">–</b><div id="tempState" class="status">°C</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <b>Hydro Doctor</b>
+      <div id="doctor" class="rec">Enter a measurement to get advice.</div>
+      <div class="small">Advice is a practical estimate. Always dose gradually, mix, wait 10–15 minutes and measure again.</div>
+    </div>
+    <div class="install"><b>Install on iPhone:</b><br>Upload this file as <b>index.html</b> to GitHub Pages, Netlify, Cloudflare Pages or your NAS web server. Then open the URL in Safari → Share → Add to Home Screen.</div>
+  </section>
+
+  <section id="measure" class="page hidden">
+    <div class="card">
+      <label>Crop profile</label><select id="crop"><option value="tomato">Tomatoes</option><option value="basil">Basil</option><option value="mixed">Tomatoes + Basil</option><option value="custom">Custom</option></select>
+      <div class="row"><div><label>Reservoir volume (L)</label><input id="volume" type="number" step="0.1" value="12"></div><div><label>Water temperature (°C)</label><input id="temp" type="number" step="0.1" placeholder="24.0"></div></div>
+      <div class="row"><div><label>pH</label><input id="ph" type="number" step="0.01" placeholder="6.20"></div><div><label>EC (mS/cm)</label><input id="ec" type="number" step="0.01" placeholder="1.60"></div></div>
+      <label>µS/cm, optional</label><input id="us" type="number" step="1" placeholder="1600">
+      <button onclick="calculate()">Calculate</button>
+    </div>
+    <div class="card">
+      <b>Recommendations</b>
+      <div id="results" class="rec">No calculation yet.</div>
+      <button class="secondary" onclick="saveMeasurement()">Save measurement</button>
+    </div>
+  </section>
+
+  <section id="history" class="page hidden">
+    <div class="card"><b>History</b><table class="history" id="histTable"><thead><tr><th>Date</th><th>pH</th><th>EC</th><th>Temp</th></tr></thead><tbody></tbody></table><button class="secondary" onclick="clearHistory()">Clear history</button></div>
+  </section>
+
+  <section id="settings" class="page hidden">
+    <div class="card">
+      <b>Settings</b>
+      <div class="notice">Dosing depends on your exact products. Start with conservative values and adjust after real measurements.</div>
+      <label>pH Down strength: ml needed to lower pH by 0.1 per 10 L</label><input id="phDownStrength" type="number" step="0.1" value="0.7">
+      <label>Nutrient strength: EC increase per ml A+B per 10 L</label><input id="nutriStrength" type="number" step="0.01" value="0.05">
+      <label>Target pH for custom profile</label><input id="customPh" type="number" step="0.01" value="6.1">
+      <label>Target EC for custom profile</label><input id="customEc" type="number" step="0.01" value="1.6">
+      <button onclick="saveSettings()">Save settings</button>
+    </div>
+  </section>
+</div>
+<div class="tabs"><div class="active" onclick="show('dashboard',this)">🏠<br>Dashboard</div><div onclick="show('measure',this)">🧪<br>Measure</div><div onclick="show('history',this)">📈<br>History</div><div onclick="show('settings',this)">⚙️<br>Settings</div></div>
+<script>
+let last={};
+const profiles={tomato:{ph:6.1,ec:2.0,name:'Tomatoes'},basil:{ph:6.0,ec:1.4,name:'Basil'},mixed:{ph:6.1,ec:1.6,name:'Tomatoes + Basil'},custom:{ph:6.1,ec:1.6,name:'Custom'}};
+function $(id){return document.getElementById(id)}
+function show(id,el){document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));$(id).classList.remove('hidden');document.querySelectorAll('.tabs div').forEach(t=>t.classList.remove('active'));el.classList.add('active');if(id==='history')renderHistory()}
+function loadSettings(){let s=JSON.parse(localStorage.htSettings||'{}');['phDownStrength','nutriStrength','customPh','customEc'].forEach(k=>{if(s[k])$(k).value=s[k]})}
+function saveSettings(){let s={phDownStrength:+$('phDownStrength').value,nutriStrength:+$('nutriStrength').value,customPh:+$('customPh').value,customEc:+$('customEc').value};localStorage.htSettings=JSON.stringify(s);alert('Settings saved')}
+function getProfile(){let p=profiles[$('crop').value]; if($('crop').value==='custom') p={ph:+$('customPh').value,ec:+$('customEc').value,name:'Custom'}; return p}
+function calculate(){let ph=+$('ph').value, ec=+$('ec').value, us=+$('us').value, temp=+$('temp').value, vol=+$('volume').value||12; if(!ec&&us)ec=us/1000;if(!us&&ec)us=Math.round(ec*1000);let p=getProfile();let rec=[];let phDown=+$('phDownStrength').value||0.7;let nutri=+$('nutriStrength').value||0.05;if(ph){let diff=ph-p.ph;if(diff>0.15){let ml=diff/0.1*phDown*(vol/10);rec.push(`Add about <b>${ml.toFixed(1)} ml pH Down</b>. Start with half, mix, wait, then measure again.`)}else if(diff<-0.25){rec.push(`pH is quite low. Prefer adding fresh water or changing the reservoir instead of adding pH Up.`)}else rec.push(`pH is close to target (${p.ph}). No pH correction needed.`)}
+if(ec){let diff=p.ec-ec;if(diff>0.15){let ml=diff/nutri*(vol/10);rec.push(`EC is low for ${p.name}. Add about <b>${ml.toFixed(1)} ml total nutrients A+B</b>, split evenly if using two-part nutrients.`)}else if(diff<-0.25){let water=((ec/p.ec)-1)*vol;rec.push(`EC is high. Add about <b>${Math.max(0,water).toFixed(1)} L fresh water</b> or replace part of the reservoir.`)}else rec.push(`EC is close to target (${p.ec} mS/cm). No nutrients needed.`)}
+if(temp){if(temp>28)rec.push(`<b>Water is too warm.</b> Add shade, cool the reservoir, increase aeration, or change water in the evening.`);else if(temp<16)rec.push(`Water is cold. Nutrient uptake may slow down.`);else rec.push(`Water temperature is good.`)}
+last={date:new Date().toISOString(),ph,ec,us,temp,vol,crop:p.name};$('results').innerHTML=rec.join('<br><br>')||'Enter values first.';updateDashboard(last,rec)}
+function updateDashboard(d,rec=[]){$('dashPh').textContent=d.ph?d.ph.toFixed(2):'–';$('dashEc').textContent=d.ec?d.ec.toFixed(2):'–';$('dashUs').textContent=d.us?Math.round(d.us):'–';$('dashTemp').textContent=d.temp?d.temp.toFixed(1):'–';$('phState').className='status '+(d.ph?(d.ph<5.5||d.ph>6.7?'bad':d.ph<5.8||d.ph>6.4?'warn':'good'):'');$('phState').textContent=d.ph?(d.ph<5.5||d.ph>6.7?'Check pH':d.ph<5.8||d.ph>6.4?'Slight drift':'Good'):'No data';$('tempState').className='status '+(d.temp?(d.temp>28?'bad':d.temp>25?'warn':'good'):'');$('tempState').textContent=d.temp?(d.temp>28?'Too warm':d.temp>25?'Warm':'Good'):'°C';$('doctor').innerHTML=rec.length?rec[0]:'Enter a measurement to get advice.'}
+function saveMeasurement(){if(!last.date){calculate()}let h=JSON.parse(localStorage.htHistory||'[]');h.unshift(last);localStorage.htHistory=JSON.stringify(h.slice(0,100));alert('Measurement saved')}
+function renderHistory(){let h=JSON.parse(localStorage.htHistory||'[]');$('histTable').querySelector('tbody').innerHTML=h.map(x=>`<tr><td>${new Date(x.date).toLocaleDateString()}</td><td>${x.ph?x.ph.toFixed(2):''}</td><td>${x.ec?x.ec.toFixed(2):''}</td><td>${x.temp?x.temp.toFixed(1):''}</td></tr>`).join('')||'<tr><td colspan="4">No saved measurements yet.</td></tr>'}
+function clearHistory(){if(confirm('Clear all saved measurements?')){localStorage.removeItem('htHistory');renderHistory()}}
+loadSettings();renderHistory();
+</script>
+</body>
+</html>
